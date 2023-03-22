@@ -1,0 +1,1 @@
+INSERT INTO public.userdetails (username, balance, email) VALUES ('user', 0, 'user@example.com') ON CONFLICT DO NOTHING
