@@ -18,5 +18,6 @@
     <module>gateway</module>
     <module>idp</module>
     <module>userdetails</module>
+    <module>common</module>
   </modules>
 </project>

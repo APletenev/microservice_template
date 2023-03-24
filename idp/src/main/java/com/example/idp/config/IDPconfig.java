@@ -46,7 +46,6 @@ public class IDPconfig {
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .redirectUri("http://127.0.0.1:8080/login/oauth2/code/gateway")
                 .scope(OidcScopes.OPENID)
-                .scope("userdetails.read")
                 .build();
 
         return new InMemoryRegisteredClientRepository(registeredClient);
