@@ -8,7 +8,7 @@ spring:
         - id: userdetails
           uri: http://127.0.0.1:8090
           predicates:
-            - Path=/userdetails
+            - Path=/api/userdetails/**
           filters:
             - TokenRelay=
             - RemoveRequestHeader=Cookie
