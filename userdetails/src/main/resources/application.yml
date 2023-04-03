@@ -2,6 +2,15 @@ server:
   port: 8090
 
 spring:
+  profiles:
+    default: prod
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
   security:
     oauth2:
       resourceserver:
