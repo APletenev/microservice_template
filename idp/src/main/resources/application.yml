@@ -1,2 +1,44 @@
 server:
   port: 9000
+
+spring:
+  profiles:
+    default: prod
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:6000/idp?characterEncoding=utf8
+    username: postgres
+    password: idp_password
+
+  jpa:
+    properties:
+      hibernate:
+        dialect=org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://idp_db:5432/idp?characterEncoding=utf8
+    username: postgres
+    password: idp_password
+  jpa:
+    properties:
+      hibernate:
+        dialect=org.hibernate.dialect.PostgreSQLDialect
