@@ -6,4 +6,11 @@ services:
       - POSTGRES_DB=userdetails
       - POSTGRES_PASSWORD=userdetails_password
     ports:
-      - "5432:5432"
+      - "5000:5432"
+  idp_db:
+    image: postgres:15.1
+    environment:
+      - POSTGRES_DB=idp
+      - POSTGRES_PASSWORD=idp_password
+    ports:
+      - "6000:5432"
