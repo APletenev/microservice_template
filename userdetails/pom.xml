@@ -13,6 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>userdetails</name>
 	<description>userdetails</description>
+
 	<properties>
 		<java.version>19</java.version>
 	</properties>
@@ -56,6 +57,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+			<version>42.5.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.example</groupId>
