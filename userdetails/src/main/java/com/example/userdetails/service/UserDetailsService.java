@@ -4,4 +4,6 @@ import com.example.userdetails.entity.UserDetails;
 
 public interface UserDetailsService {
     UserDetails getDetailsByName(String username);
+
+    void save(UserDetails userDetails);
 }

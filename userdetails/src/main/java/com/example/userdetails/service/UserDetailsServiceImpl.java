@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements com.example.userdetails.service.UserDetailsService {
 
     private UserDetailsRepository userDetailsRepository;
 
@@ -15,4 +15,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails getDetailsByName(String username) {
         return userDetailsRepository.findById(username).get() ;
     }
+
+    @Override
+    public void save(UserDetails userDetails) {
+        userDetailsRepository.save(userDetails);
+    }
+
+
 }
