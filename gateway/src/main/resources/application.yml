@@ -1,14 +1,14 @@
 server:
-  port: 8080
+  port: ${GATEWAY_PORT}
 
 spring:
   cloud:
     gateway:
       routes:
         - id: userdetails
-          uri: http://127.0.0.1:8090
+          uri: http://${USERDETAILS_HOST}:${USERDETAILS_PORT}
           predicates:
-            - Path=/api/userdetails/**
+            - Path=${USERDETAILS_API}/**
           filters:
             - TokenRelay=
             - RemoveRequestHeader=Cookie
@@ -19,11 +19,11 @@ spring:
         registration:
           gateway:
             provider: spring
-            client-id: gateway
-            client-secret: 6:hR*sd.53U)
+            client-id: ${GATEWAY_CLIENT_ID}
+            client-secret: ${GATEWAY_SECRET}
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope: openid
         provider:
           spring:
-            issuer-uri: http://localhost:9000
+            issuer-uri: http://${IDP_HOST}:${IDP_PORT}

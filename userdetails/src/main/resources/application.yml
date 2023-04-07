@@ -1,26 +1,17 @@
 server:
-  port: 8090
+  port: ${USERDETAILS_PORT}
 
 spring:
-  profiles:
-    default: prod
-
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9000
+          issuer-uri: http://${IDP_HOST}:${IDP_PORT}
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5000/userdetails?characterEncoding=utf8
+    url: jdbc:postgresql://${USERDETAILS_DATASOURCE_HOST}:${USERDETAILS_DB_PORT}/${USERDETAILS_DB}?characterEncoding=utf8
     username: postgres
-    password: userdetails_password
+    password: ${USERDETAILS_DB_PASSWORD}
   jpa:
     properties:
       hibernate:

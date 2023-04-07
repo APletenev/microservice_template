@@ -4,10 +4,12 @@ import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
@@ -29,6 +31,10 @@ import java.util.UUID;
 @SuppressWarnings("SpellCheckingInspection")
 @Configuration(proxyBeanMethods = false)
 public class IDPconfig {
+
+    @Autowired
+    private Environment env;
+
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SecurityFilterChain authServerSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -39,12 +45,13 @@ public class IDPconfig {
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("gateway")
-                .clientSecret("{noop}6:hR*sd.53U)")
+                .clientId(env.getProperty("GATEWAY_CLIENT_ID"))
+                .clientSecret("{noop}" + env.getProperty("GATEWAY_SECRET"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/gateway")
+                .redirectUri("http://" + env.getProperty("GATEWAY_HOST") + ":" + env.getProperty("GATEWAY_PORT")
+                            + "/login/oauth2/code/gateway")
                 .scope(OidcScopes.OPENID)
                 .build();
 
@@ -83,7 +90,7 @@ public class IDPconfig {
     @Bean
     public ProviderSettings providerSettings() {
         return ProviderSettings.builder()
-                .issuer("http://localhost:9000")
+                .issuer("http://" + env.getProperty("IDP_HOST") + ":" + env.getProperty("IDP_PORT"))
                 .build();
     }
 

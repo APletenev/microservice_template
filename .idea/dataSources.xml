@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="idp@localhost" uuid="ef49c34a-4e3d-480f-8a91-13cedea6e0ba">
+    <data-source source="LOCAL" name="idp_dev_database@localhost" uuid="dcb74faf-b289-48a0-8da0-c644944907e6">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:6000/idp?characterEncoding=utf8</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:35000/idp_dev_database?characterEncoding=utf8</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="userdetails@localhost [3]" uuid="f4f12226-345a-4b92-9083-65cb12590a1e">
+    <data-source source="LOCAL" name="userdetails_dev_database@localhost" uuid="bdbc4593-4dc2-4314-b159-8c52cce22615">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5000/userdetails?characterEncoding=utf8</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:35100/userdetails_dev_database?characterEncoding=utf8</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
