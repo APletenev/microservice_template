@@ -1,5 +1,5 @@
 server:
-  port: ${USERDETAILS_PORT}
+  port: ${ACCOUNT_PORT}
 
 spring:
   security:
@@ -9,9 +9,9 @@ spring:
           issuer-uri: http://${IDP_HOST}:${IDP_PORT}
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${USERDETAILS_DATASOURCE_HOST}:${USERDETAILS_DB_PORT}/${USERDETAILS_DB}?characterEncoding=utf8
+    url: jdbc:postgresql://${ACCOUNT_DATASOURCE_HOST}:${ACCOUNT_DB_PORT}/${ACCOUNT_DB}?characterEncoding=utf8
     username: postgres
-    password: ${USERDETAILS_DB_PASSWORD}
+    password: ${ACCOUNT_DB_PASSWORD}
   jpa:
     properties:
       hibernate:

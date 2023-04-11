@@ -1,7 +1,7 @@
-package com.example.userdetails.controller;
+package com.example.account.controller;
 
-import com.example.userdetails.entity.UserDetails;
-import com.example.userdetails.service.UserDetailsService;
+import com.example.account.entity.Account;
+import com.example.account.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("#{environment.USERDETAILS_API}")
+@RequestMapping("#{environment.ACCOUNT_API}")
 @RestController
 @AllArgsConstructor
-public class UserDetailsController {
-    private UserDetailsService userDetailService;
+public class AccountController {
+    private AccountService accountervice;
 
     /**
      * Админ может просматривать информацию о пользователях
@@ -22,7 +22,7 @@ public class UserDetailsController {
      */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{username}")
-    public UserDetails getUserdetails(@PathVariable String username) {
-        return userDetailService.getDetailsByName(username);
+    public Account getAccount(@PathVariable String username) {
+        return accountervice.getDetailsByName(username);
     }
 }

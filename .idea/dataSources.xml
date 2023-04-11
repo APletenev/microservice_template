@@ -8,11 +8,11 @@
       <jdbc-url>jdbc:postgresql://localhost:35000/idp_dev_database?characterEncoding=utf8</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="userdetails_dev_database@localhost" uuid="bdbc4593-4dc2-4314-b159-8c52cce22615">
+    <data-source source="LOCAL" name="account_dev_database@localhost" uuid="a5397d04-4f1c-4109-b6e4-8db41be1de12">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:35100/userdetails_dev_database?characterEncoding=utf8</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:35100/account_dev_database?characterEncoding=utf8</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

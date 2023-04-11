@@ -7,10 +7,10 @@ services:
       - POSTGRES_PASSWORD=${IDP_DB_PASSWORD}
     ports:
       - "${IDP_DB_PORT}:5432"
-  userdetails_db:
+  account_db:
     image: postgres:15.1
     environment:
-      - POSTGRES_DB=${USERDETAILS_DB}
-      - POSTGRES_PASSWORD=${USERDETAILS_DB_PASSWORD}
+      - POSTGRES_DB=${ACCOUNT_DB}
+      - POSTGRES_PASSWORD=${ACCOUNT_DB_PASSWORD}
     ports:
-      - "${USERDETAILS_DB_PORT}:5432"
+      - "${ACCOUNT_DB_PORT}:5432"

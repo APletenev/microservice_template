@@ -1,4 +1,4 @@
-package com.example.userdetails.entity;
+package com.example.account.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "userdetails")
+@Table(name = "account")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-public class UserDetails {
+public class Account {
     @Id
     private String username;
     @Email

@@ -5,10 +5,10 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: userdetails
-          uri: http://${USERDETAILS_HOST}:${USERDETAILS_PORT}
+        - id: account
+          uri: http://${ACCOUNT_HOST}:${ACCOUNT_PORT}
           predicates:
-            - Path=${USERDETAILS_API}/**
+            - Path=${ACCOUNT_API}/**
           filters:
             - TokenRelay=
             - RemoveRequestHeader=Cookie
