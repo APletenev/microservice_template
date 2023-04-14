@@ -50,7 +50,7 @@ public class IDPconfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://" + env.getProperty("GATEWAY_HOST") + ":" + env.getProperty("GATEWAY_PORT")
+                .redirectUri("https://" + env.getProperty("GATEWAY_HOST") + ":" + env.getProperty("GATEWAY_PORT")
                             + "/login/oauth2/code/gateway")
                 .scope(OidcScopes.OPENID)
                 .build();

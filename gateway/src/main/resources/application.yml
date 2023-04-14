@@ -1,5 +1,12 @@
 server:
   port: ${GATEWAY_PORT}
+  ssl:
+    enabled: true
+    enabled-protocols: TLSv1.3
+    key-store: ${GATEWAY_KEY_STORE}
+    key-store-password: ${GATEWAY_KEY_STORE_PASSWORD}
+    key-store-type: pkcs12
+    key-alias: ${GATEWAY_KEY_ALIAS}
 
 spring:
   cloud:
