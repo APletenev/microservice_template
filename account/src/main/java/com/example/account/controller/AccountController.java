@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 public class AccountController {
-    private AccountService accountervice;
+    private AccountService accountService;
 
     /**
      * Админ может просматривать информацию о пользователях
@@ -23,6 +23,6 @@ public class AccountController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{username}")
     public Account getAccount(@PathVariable String username) {
-        return accountervice.getDetailsByName(username);
+        return accountService.getDetailsByName(username);
     }
 }
