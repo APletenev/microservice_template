@@ -34,3 +34,17 @@ spring:
         provider:
           spring:
             issuer-uri: http://${IDP_HOST}:${IDP_PORT}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        cloud:
+          gateway: TRACE

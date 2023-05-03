@@ -19,3 +19,15 @@ spring:
     init:
       mode: always
       platform: postgresql
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
