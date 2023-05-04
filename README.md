@@ -1,7 +1,7 @@
 # shop
 Микросервисный шаблон с реализацией Spring Boot Security (OAuth2, JWT, RBAC, SSL/TLS)
 
-Стек: Java, Spring Boot, Docker.
+Стек: Java, Spring Boot, Docker, Playwright.
 
 ## Сервисы
 
