@@ -1,5 +1,6 @@
 package com.example.idp;
 
+import com.example.common.Roles;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
@@ -25,9 +26,9 @@ public class SampleUsersLoader {
         log.info("Development environment preparing. Loading sample data..");
         try {
             jdbcUserDetailsManager.createUser(
-                    User.withUsername("admin").password("{bcrypt}"+"$2a$12$z0XvKwsTBcObssE6KffWmuekgfrnEs0wiI4BRAqtsK/M4lKGdJrWS").roles("ADMIN").build());
+                    User.withUsername("admin").password("{bcrypt}"+"$2a$12$z0XvKwsTBcObssE6KffWmuekgfrnEs0wiI4BRAqtsK/M4lKGdJrWS").roles(Roles.ADMIN_ROLE).build());
             jdbcUserDetailsManager.createUser(
-                    User.withUsername("user").password("{bcrypt}"+"$2a$12$UNZp13hRqxsdLVhyxMqVE.XfEwM/H6A2p8CzHM7dHp4VFcUxpJbuu").roles("USER").build());
+                    User.withUsername("user").password("{bcrypt}"+"$2a$12$UNZp13hRqxsdLVhyxMqVE.XfEwM/H6A2p8CzHM7dHp4VFcUxpJbuu").roles(Roles.USER_ROLE).build());
         } catch (DuplicateKeyException e) {
             log.info("users already exist");
         }
