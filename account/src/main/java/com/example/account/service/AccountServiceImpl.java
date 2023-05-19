@@ -12,11 +12,6 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
 
     @Override
-    public Account getDetailsByName(String username) {
-        return accountRepository.findById(username).get() ;
-    }
-
-    @Override
     public void save(Account account) {
         accountRepository.save(account);
     }

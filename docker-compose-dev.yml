@@ -14,3 +14,8 @@ services:
       - POSTGRES_PASSWORD=${ACCOUNT_DB_PASSWORD}
     ports:
       - "${ACCOUNT_DB_PORT}:5432"
+  axon:
+    image: axoniq/axonserver
+    ports:
+      - "${AXON_PORT}:8024"
+      - "${AXON_GATEWAY}:8124"
