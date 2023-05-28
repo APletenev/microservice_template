@@ -24,6 +24,12 @@ spring:
     activate:
       on-profile: dev
 
+  cloud:
+    stream:
+      bindings:
+        signupEventSupplier-in-0:
+          destination: signup-events
+
 logging:
   level:
     org:

@@ -20,6 +20,13 @@ spring:
       mode: always
       platform: postgresql
 
+  cloud:
+    stream:
+      bindings:
+        signupEventSupplier-out-0:
+          destination: signup-events
+      source: signupEventSupplier
+
 ---
 spring:
   config:
