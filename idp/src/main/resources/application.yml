@@ -14,11 +14,17 @@ spring:
         dialect=org.hibernate.dialect.PostgreSQLDialect
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
   sql:
     init:
       mode: always
       platform: postgresql
+
+axon:
+  eventhandling:
+    processors:
+      name:
+        mode: tracking
 
 ---
 spring:

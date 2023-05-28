@@ -7,7 +7,6 @@ import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.Customizer;
@@ -36,8 +35,23 @@ public class IDPconfig {
     @Autowired
     private Environment env;
 
+
     @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
+    @Order(1)
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher("/api/user/signup")
+                .authorizeHttpRequests(authorize -> {
+                    try {
+                        authorize.anyRequest().anonymous().and().csrf().disable();
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+        return http.build();
+    }
+    @Bean
+    @Order(2)
     public SecurityFilterChain authServerSecurityFilterChain(HttpSecurity http) throws Exception {
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)

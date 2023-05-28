@@ -18,6 +18,12 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate.ddl-auto: update
 
+axon:
+  eventhandling:
+    processors:
+      name:
+        mode: tracking
+
 ---
 spring:
   config:

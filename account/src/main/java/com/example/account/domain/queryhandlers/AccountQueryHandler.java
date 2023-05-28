@@ -12,8 +12,9 @@ import org.springframework.stereotype.Component;
 public class AccountQueryHandler {
 
     private AccountRepository accountRepository;
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @QueryHandler
     public Account handle(AccountQuery query) {
-        return accountRepository.findById(query.getUsername()).get() ;
+        return accountRepository.findById(query.getOwnerName()).get() ;
     }
 }

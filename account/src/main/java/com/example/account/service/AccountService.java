@@ -1,8 +1,8 @@
 package com.example.account.service;
 
-import com.example.account.entity.Account;
+import com.example.common.coreapi.events.AccountCreatedEvent;
 
 public interface AccountService {
 
-    void save(Account account);
+    void storeAccount(AccountCreatedEvent event);
 }
