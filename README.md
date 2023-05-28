@@ -1,7 +1,7 @@
 # shop
-Микросервисный шаблон с реализацией Spring Boot Security (OAuth2, JWT, RBAC, SSL/TLS)
+Микросервисный шаблон с реализацией Spring Boot Security (OAuth2, JWT, RBAC, SSL/TLS), Event Sourcing + CQRS + MQ
 
-Стек: Java, Spring Boot, Docker, Playwright.
+Стек: Java, Spring Boot, Docker, Playwright, Axon.
 
 ## Сервисы
 
@@ -9,5 +9,7 @@
 * Gateway - API шлюз
 * Account - сервис ресурсов (счета пользователей)
 
-Функционал API подразделяется на админский и пользовательский.
-Админ может просматривать информацию о счетах пользователей.
+
+## Функционал API
+* Пользователь может зарегистрироваться.
+* Админ может просматривать информацию о счетах пользователей.
