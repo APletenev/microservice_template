@@ -1,28 +1,31 @@
 package com.example;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.http.HttpStatus;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Order(1)
-public class UnauthorizedTest extends PrepareTest {
+class UnauthorizedTest extends PrepareTest {
 
     @Test
     @Order(1)
     void unauthorizedLogin() {
-        assertThat(login("NotExistingUser","NotValidPassword")).hasURL(idpURL + "/login?error");
+        assertThat(login("NotExistingUser","NotValidPassword")).hasURL(IDP_URL + "/login?error");
     }
-
     @Test
     void unauthorizedCanNotGetUserAccount() {
-        assertEquals(getUserInfo().status(),401);
+        assertEquals(getUserInfo().status(), HttpStatus.UNAUTHORIZED.value());
     }
 
     @Test
     void unauthorizedCanNotAccessOtherEndpoints() {
-        assertEquals(tryEndPointOtherThenSignup().url(),idpURL+"/login");
+        assertEquals(tryEndPointOtherThenSignup().url(), IDP_URL +"/login");
     }
 
 }
