@@ -10,7 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -20,8 +20,8 @@ public class PrepareTest {
     Browser browser;
     BrowserContext context;
     APIRequestContext request;
-    final String gatewayURL = "https://" + System.getenv("GATEWAY_HOST") + ":" + System.getenv("GATEWAY_PORT");
-    final String idpURL = "http://" + System.getenv("IDP_HOST") + ":" + System.getenv("IDP_PORT");
+    final String GATEWAY_URL = "https://" + System.getenv("GATEWAY_HOST") + ":" + System.getenv("GATEWAY_PORT");
+    final String IDP_URL = "http://" + System.getenv("IDP_HOST") + ":" + System.getenv("IDP_PORT");
     private String username;
 
     @BeforeAll
@@ -33,6 +33,7 @@ public class PrepareTest {
         username = "testuser" + UUID.randomUUID();
 
         unauthorizedCanSignUp(); //Create user and account for using by another tests
+
     }
 
     @AfterAll
@@ -41,15 +42,15 @@ public class PrepareTest {
     }
 
     void unauthorizedCanSignUp() {
-        APIResponse response=signUp();
-        assertEquals(response.status(),200);
+        APIResponse response = signUp(this.username);
+        assertTrue(response.ok(), "Request response: " + response.text());
     }
 
     Page login(String username, String password) {
 
         Page page = context.newPage();
 
-        page.navigate(gatewayURL + "/oauth2/authorization/gateway");
+        page.navigate(GATEWAY_URL + "/oauth2/authorization/gateway");
         page.getByPlaceholder("Username").fill(username);
         page.getByPlaceholder("Password").fill(password);
         page.getByPlaceholder("Password").press("Enter");
@@ -59,21 +60,22 @@ public class PrepareTest {
 
     APIResponse getUserInfo() {
         return request.get(
-                gatewayURL +
+                GATEWAY_URL +
                         System.getenv("ACCOUNT_API") +
-                        "/"+ this.username);
+                        "/" + this.username);
     }
 
-    APIResponse signUp() {
+    APIResponse signUp(String username) {
+
         return request.post(
-                idpURL +
+                IDP_URL +
                         System.getenv("IDP_API") +
-                        "/signup", RequestOptions.create().setData(new UserDTO(this.username, "testpassword", "test@email.com")));
+                        "/signup", RequestOptions.create().setData(new UserDTO(username, "testpassword", "test@email.com")));
     }
 
     APIResponse tryEndPointOtherThenSignup() {
         return request.get(
-                idpURL +
+                IDP_URL +
                         System.getenv("IDP_API") +
                         "/");
     }
