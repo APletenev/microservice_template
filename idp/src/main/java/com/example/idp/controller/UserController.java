@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.example.common.ApiEndpoints.SIGNUP_ENDPOINT;
+
 @RequestMapping("#{environment.IDP_API}")
 @RestController
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class UserController {
     private UserService userService;
     private final StreamBridge streamBridge;
 
-    @PostMapping("/signup")
+    @PostMapping(SIGNUP_ENDPOINT)
     public void signUpUser(@RequestBody Credentials credentials) {
 
         userService.createUser(credentials);

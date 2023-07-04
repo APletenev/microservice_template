@@ -7,6 +7,7 @@ import com.microsoft.playwright.options.RequestOptions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
+import static com.example.common.ApiEndpoints.SIGNUP_ENDPOINT;
 
 import java.util.UUID;
 
@@ -69,7 +70,7 @@ public class PrepareTest {
         return request.post(
                 IDP_URL +
                         System.getenv("IDP_API") +
-                        "/signup", RequestOptions.create().setData(new Credentials(this.username, "testpassword", "test@email.com")));
+                        SIGNUP_ENDPOINT, RequestOptions.create().setData(new Credentials(this.username, "testpassword", "test@email.com")));
     }
 
     APIResponse tryEndPointOtherThenSignup() {

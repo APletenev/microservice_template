@@ -28,6 +28,8 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
 
+import static com.example.common.ApiEndpoints.SIGNUP_ENDPOINT;
+
 @SuppressWarnings("SpellCheckingInspection")
 @Configuration(proxyBeanMethods = false)
 public class IDPconfig {
@@ -40,7 +42,7 @@ public class IDPconfig {
     @Order(1)
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
         http
-                .securityMatcher("/api/user/signup")
+                .securityMatcher(env.getProperty("IDP_API")+SIGNUP_ENDPOINT)
                 .authorizeHttpRequests(authorize -> {
                     try {
                         authorize.anyRequest().anonymous().and().csrf().disable();
