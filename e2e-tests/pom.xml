@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.example</groupId>
         <artifactId>shop</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>e2e-tests</artifactId>
@@ -31,7 +31,7 @@
       <dependency>
           <groupId>com.example</groupId>
           <artifactId>common</artifactId>
-          <version>0.0.1-SNAPSHOT</version>
+          <version>${project.version}</version>
           <scope>test</scope>
       </dependency>
   </dependencies>
