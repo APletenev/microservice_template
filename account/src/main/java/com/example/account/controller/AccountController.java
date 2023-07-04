@@ -2,7 +2,7 @@ package com.example.account.controller;
 
 import com.example.account.entity.Account;
 import com.example.account.service.AccountService;
-import com.example.common.Roles;
+import com.example.common.role.Roles;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;

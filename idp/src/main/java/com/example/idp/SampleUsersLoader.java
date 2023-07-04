@@ -1,6 +1,6 @@
 package com.example.idp;
 
-import com.example.common.Roles;
+import com.example.common.role.Roles;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;

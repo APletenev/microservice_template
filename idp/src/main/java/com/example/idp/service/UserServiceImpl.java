@@ -1,7 +1,7 @@
 package com.example.idp.service;
 
-import com.example.common.Roles;
 import com.example.common.coreapi.Credentials;
+import com.example.common.role.Roles;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
