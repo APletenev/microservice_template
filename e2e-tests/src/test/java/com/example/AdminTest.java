@@ -13,21 +13,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AdminTest extends PrepareTest {
 
+    @BeforeAll
+    void prepareUserAccountForTests() {
+        unauthorizedSignUp();
+    }
     @Test
     @Order(1)
     void adminLogin() {
-        assertThat(login("admin","123")).hasURL(GATEWAY_URL + "/");
+        assertThat(login(System.getenv("IDP_ADMIN"),System.getenv("IDP_ADMIN_PASSWORD"))).hasURL(GATEWAY_URL + "/");
     }
 
     @Test
     void authorizedAdminCanNotSignUp() {
         APIResponse response = signUp("authorizedAdminSignUp"+ UUID.randomUUID());
-        assertEquals(response.status(), HttpStatus.FORBIDDEN.value(),"Request response: " + response.text());
+        assertEquals(HttpStatus.FORBIDDEN.value(), response.status(), "Request response: " + response.text());
     }
 
     @Test
     void adminCanGetUserAccount() {
-        assertTrue(getUserInfo().ok());
+        APIResponse response = getUserInfo();
+        assertTrue(response.ok(),"Request response: " + response.text());
     }
 
 }
