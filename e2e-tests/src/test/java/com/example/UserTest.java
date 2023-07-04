@@ -17,20 +17,26 @@ class UserTest extends PrepareTest {
 
     @Test
     @Order(1)
+    void userSignup() {
+        unauthorizedSignUp();
+    }
+
+    @Test
+    @Order(2)
     void userLogin() {
-        assertThat(login("user","456")).hasURL(GATEWAY_URL + "/");
+        assertThat(login(username, TESTPASSWORD)).hasURL(GATEWAY_URL + "/");
     }
 
 
     @Test
     void authorizedUserCanNotSignUp() {
-        APIResponse response = signUp("authorizedUserSignUp"+ UUID.randomUUID());
-        assertEquals(response.status(), HttpStatus.FORBIDDEN.value(),"Request response: " + response.text());
+        APIResponse response = signUp("authorizedUserSignUp" + UUID.randomUUID());
+        assertEquals(response.status(), HttpStatus.FORBIDDEN.value(), "Request response: " + response.text());
     }
 
     @Test
     void userCanNotGetUserAccount() {
-        assertEquals(getUserInfo().status(),HttpStatus.FORBIDDEN.value());
+        assertEquals(getUserInfo().status(), HttpStatus.FORBIDDEN.value());
     }
 
 }
