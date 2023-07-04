@@ -1,6 +1,6 @@
 package com.example.account;
 
-import com.example.common.JwtRoleConverter;
+import com.example.common.role.JwtRoleConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -22,7 +22,7 @@ public class SecurityConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter((Converter) new JwtRoleConverter());
 
         http
-                .authorizeRequests(authz -> authz
+                .authorizeHttpRequests(authz -> authz
                         .anyRequest().authenticated())
                 .oauth2ResourceServer()
                 .jwt()

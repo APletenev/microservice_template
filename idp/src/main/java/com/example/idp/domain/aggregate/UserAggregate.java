@@ -1,6 +1,6 @@
 package com.example.idp.domain.aggregate;
 
-import com.example.common.Roles;
+import com.example.common.role.Roles;
 import com.example.common.coreapi.commands.CreateUserCommand;
 import com.example.common.coreapi.commands.RollbackUserCreationCommand;
 import com.example.common.coreapi.commands.SignupUserCommand;
@@ -52,7 +52,7 @@ public class UserAggregate {
         username = event.getUsername();
         password = event.getPassword();
         enabled = true;
-        roles = new HashSet<String>();
+        roles = new HashSet<>();
         roles.add(Roles.USER_ROLE);
     }
 

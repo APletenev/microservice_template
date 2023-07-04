@@ -1,11 +1,13 @@
 package com.example.idp.service;
 
-import com.example.common.Roles;
+import com.example.common.role.Roles;
 import com.example.common.coreapi.events.UserCreatedEvent;
 import com.example.common.coreapi.events.UserDeletedEvent;
+import com.example.idp.exception.UsernameAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import org.axonframework.eventhandling.EventHandler;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,7 @@
 package com.example.account.controller;
 
 import com.example.account.entity.Account;
-import com.example.account.service.AccountService;
-import com.example.common.Roles;
+import com.example.common.role.Roles;
 import com.example.common.coreapi.queries.AccountQuery;
 import lombok.AllArgsConstructor;
 import org.axonframework.queryhandling.QueryGateway;
