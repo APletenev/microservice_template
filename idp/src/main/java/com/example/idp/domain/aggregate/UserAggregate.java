@@ -1,17 +1,19 @@
 package com.example.idp.domain.aggregate;
 
-import com.example.common.role.Roles;
-import com.example.common.coreapi.commands.CreateUserCommand;
 import com.example.common.coreapi.commands.RollbackUserCreationCommand;
 import com.example.common.coreapi.commands.SignupUserCommand;
 import com.example.common.coreapi.events.UserCreatedEvent;
 import com.example.common.coreapi.events.UserDeletedEvent;
-import com.example.common.coreapi.events.UserSignedUpEvent;
+import com.example.common.coreapi.queries.UserExistsQuery;
+import com.example.common.role.Roles;
+import com.example.idp.exception.UsernameAlreadyExistsException;
 import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.queryhandling.QueryGateway;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.http.HttpStatus;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,12 +34,10 @@ public class UserAggregate {
     private Set<String> roles;
 
     @CommandHandler
-    public UserAggregate(SignupUserCommand command) {
-        apply(new UserSignedUpEvent(command.getUserId(), command.getUsername(), command.getPassword(), command.getEmail()));
-    }
-    @CommandHandler
-    public void handle(CreateUserCommand command) {
-        apply(new UserCreatedEvent(command.getUserId(), command.getUsername(), command.getPassword()));
+    public UserAggregate(SignupUserCommand command, QueryGateway queryGateway) {
+        if (Boolean.TRUE.equals(queryGateway.query(new UserExistsQuery(command.getUsername()), Boolean.class).join()))
+            throw new UsernameAlreadyExistsException("Username already exists", null, HttpStatus.CONFLICT);
+        apply(new UserCreatedEvent(command.getUserId(), command.getUsername(), command.getPassword(), command.getEmail()));
     }
 
     @CommandHandler
@@ -46,7 +46,7 @@ public class UserAggregate {
     }
 
     @EventSourcingHandler
-    public void on(UserSignedUpEvent event) {
+    public void on(UserCreatedEvent event) {
 
         userId = event.getUserId();
         username = event.getUsername();
@@ -57,7 +57,7 @@ public class UserAggregate {
     }
 
     @EventSourcingHandler
-    public void on(UserDeletedEvent event){
+    public void on(UserDeletedEvent event) {
         markDeleted();
     }
 }

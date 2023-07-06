@@ -8,5 +8,7 @@ public class UserCreatedEvent {
     private final String userId;
     private final String username;
     private final String password;
+    private final String email;
+
 
 }

@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UserTest extends PrepareTest {
@@ -20,9 +21,19 @@ class UserTest extends PrepareTest {
     void userSignup() {
         unauthorizedSignUp();
     }
-
     @Test
     @Order(2)
+    void UnableSignupExistingUser() {
+        username = "testuser" + UUID.randomUUID();
+
+        APIResponse response = signUp(this.username);
+        assertTrue(response.ok(), "Request response: " + response.text());
+
+        response = signUp(this.username);
+        assertEquals(response.status(), HttpStatus.CONFLICT.value(), "Request response: " + response.text());
+    }
+    @Test
+    @Order(3)
     void userLogin() {
         assertThat(login(username, TESTPASSWORD)).hasURL(GATEWAY_URL + "/");
     }
