@@ -14,3 +14,8 @@ services:
       - POSTGRES_PASSWORD=${ACCOUNT_DB_PASSWORD}
     ports:
       - "${ACCOUNT_DB_PORT}:5432"
+  broker:
+      image: rabbitmq:3-management
+      ports:
+        - "${BROKER_PORT}:5672"
+        - "15672:15672" # Web management console

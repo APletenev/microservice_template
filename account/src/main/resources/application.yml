@@ -30,6 +30,12 @@ spring:
         signupEventSupplier-in-0:
           destination: signup-events
 
+  rabbitmq:
+    host=localhost
+    port=5672
+    username=guest
+    password=guest
+
 logging:
   level:
     org:
