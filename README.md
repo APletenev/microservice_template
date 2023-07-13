@@ -1,5 +1,5 @@
 # shop
-Микросервисный шаблон с реализацией Spring Boot Security (OAuth2, JWT, RBAC, SSL/TLS), Event Sourcing + CQRS + MQ
+Микросервисный шаблон с реализацией Spring Boot Security (OAuth2, JWT, RBAC, SSL/TLS), Event Sourcing, MQ
 
 Стек: Java, Spring Boot / Cloud Streams, Docker, Playwright.
 
