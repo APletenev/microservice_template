@@ -20,7 +20,7 @@ public class AccountApplication {
 	}
 
 	@Bean
-	public Consumer<Credentials> signupEventSupplier() {
+	public Consumer<Credentials> signupEventConsumer() {
 		return credentials -> accountService.save(new Account(credentials.getUsername(), credentials.getEmail(), 0));
 	}
 
