@@ -27,9 +27,12 @@ spring:
   cloud:
     stream:
       bindings:
-        signupEventConsumer-in-0:
-          destination: signup-events
+        createAccount-in-0:
+          destination: createAccount
           group: account
+        accountCreated-out-0:
+          destination: accountCreated
+      source: accountCreated
 
   rabbitmq:
     host=localhost
