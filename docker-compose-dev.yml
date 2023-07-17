@@ -15,7 +15,9 @@ services:
     ports:
       - "${ACCOUNT_DB_PORT}:5432"
   broker:
-      image: rabbitmq:3-management
+      image: moeenz/docker-kafka-kraft:latest
+      restart: always
       ports:
-        - "${BROKER_PORT}:5672"
-        - "15672:15672" # Web management console
+        - "${BROKER_PORT}:9092"
+      environment:
+        - KRAFT_CONTAINER_HOST_NAME=${BROKER_HOST}

@@ -30,11 +30,9 @@ spring:
           group: user
       source: createAccount
 
-  rabbitmq:
-    host=localhost
-    port=5672
-    username=guest
-    password=guest
+  kafka:
+    bootstrap-servers:
+      ${BROKER_HOST}: ${BROKER_PORT}
 
 ---
 spring:
