@@ -6,4 +6,6 @@ public interface AccountService {
     Account getDetailsByName(String username);
 
     void save(Account account);
+
+    void deleteAccount(String username);
 }

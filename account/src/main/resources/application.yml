@@ -2,6 +2,9 @@ server:
   port: ${ACCOUNT_PORT}
 
 spring:
+  application:
+    name: account
+
   security:
     oauth2:
       resourceserver:
@@ -18,25 +21,25 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate.ddl-auto: update
 
+  cloud:
+    stream:
+      bindings:
+        signup-in-0:
+          destination: signup
+          group: account
+        accountCreation-out-0:
+          destination: accountCreation
+      source: signup
+
+  kafka:
+    bootstrap-servers:
+      ${BROKER_HOST}: ${BROKER_PORT}
+
 ---
 spring:
   config:
     activate:
       on-profile: dev
-
-  cloud:
-    stream:
-      bindings:
-        createAccount-in-0:
-          destination: createAccount
-          group: account
-        accountCreated-out-0:
-          destination: accountCreated
-      source: accountCreated
-
-  kafka:
-    bootstrap-servers:
-      ${BROKER_HOST}: ${BROKER_PORT}
 
 logging:
   level:

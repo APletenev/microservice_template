@@ -2,6 +2,10 @@ server:
   port: ${IDP_PORT}
 
 spring:
+
+  application:
+    name: idp
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${IDP_DATASOURCE_HOST}:${IDP_DB_PORT}/${IDP_DB}?characterEncoding=utf8
@@ -23,12 +27,22 @@ spring:
   cloud:
     stream:
       bindings:
-        createAccount-out-0:
-          destination: createAccount
-        accountCreated-in-0:
-          destination: accountCreated
-          group: user
-      source: createAccount
+        signup-out-0:
+          destination: signup
+        signup-in-0:
+          destination: signup
+          group: user1
+      source: signup;accountCreation
+      function:
+        definition: accountCreation;signup
+      kafka:
+        streams:
+          binder:
+            functions:
+              accountCreation:
+                applicationId: account-creation-consumer
+              signup:
+                applicationId: signup-consumer
 
   kafka:
     bootstrap-servers:

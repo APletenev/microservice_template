@@ -13,12 +13,17 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getDetailsByName(String username) {
-        return accountRepository.findById(username).get() ;
+        return accountRepository.findById(username).orElse(null);
     }
 
     @Override
     public void save(Account account) {
         accountRepository.save(account);
+    }
+
+    @Override
+    public void deleteAccount(String username) {
+        accountRepository.deleteById(username);
     }
 
 
