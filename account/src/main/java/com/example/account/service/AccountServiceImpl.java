@@ -5,6 +5,8 @@ import com.example.account.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @AllArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -13,7 +15,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getDetailsByName(String username) {
-        return accountRepository.findById(username).orElse(null);
+        return accountRepository.getAccountByUsername(username).orElse(null);
     }
 
     @Override
@@ -21,9 +23,8 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.save(account);
     }
 
-    @Override
-    public void deleteAccount(String username) {
-        accountRepository.deleteById(username);
+    public void deleteAccountById(UUID id) {
+        accountRepository.deleteById(id);
     }
 
 

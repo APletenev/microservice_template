@@ -12,8 +12,8 @@ public class UserStatusJoiner implements ValueJoiner<UserWithStatus, UserWithSta
 
     @Override
     public UserWithStatus apply(UserWithStatus s1, UserWithStatus s2) {
-        UserWithStatus result = new UserWithStatus(s1.getUsername(), s1.getPassword(), s1.getEmail(), CONFIRMED);
-        if (s2 == null || s2.getStatus() == CANCELLED) result.setStatus(CANCELLED);
-        return result;
+        if (s2 == null || s2.getStatus() == CANCELLED) s1.setStatus(CANCELLED);
+        else s1.setStatus(CONFIRMED);
+        return s1;
     }
 }

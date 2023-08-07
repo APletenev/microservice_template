@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 
@@ -31,7 +32,7 @@ public class SignupSagaOrchestrator {
 
     private final StreamBridge streamBridge;
 
-    private final Map<String, CompletableFuture<ResponseEntity<String>>> transactionMap = new ConcurrentHashMap<>();
+    private final Map<UUID, CompletableFuture<ResponseEntity<String>>> transactionMap = new ConcurrentHashMap<>();
 
     private final int timeout;
 
@@ -44,8 +45,8 @@ public class SignupSagaOrchestrator {
     public ResponseEntity<String> createSignupSaga(Credentials credentials) {
 
         CompletableFuture<ResponseEntity<String>> signupFuture = new CompletableFuture<>();
-        transactionMap.put(credentials.getUsername(), signupFuture);
-        UserWithStatus userWithStatus = new UserWithStatus(credentials, NEW);
+        UserWithStatus userWithStatus = new UserWithStatus(credentials, UUID.randomUUID(), NEW);
+        transactionMap.put(userWithStatus.getId(), signupFuture);
         streamBridge.send("signup-out-0", userWithStatus);
         boolean exceptionRaised = false;
 
@@ -63,23 +64,23 @@ public class SignupSagaOrchestrator {
                 userWithStatus.setStatus(CANCELLED);
                 streamBridge.send("signup-out-0", userWithStatus);
             }
-            transactionMap.remove(credentials.getUsername());
+            transactionMap.remove(userWithStatus.getId());
         }
     }
 
     @Bean // Provides reliable Kafka-based "scheduler" for cancelling transaction by timeout
-    public KStream<String, UserWithStatus> accountResponse(StreamsBuilder builder, UserStatusJoiner userStatusJoiner) {
+    public KStream<UUID, UserWithStatus> accountResponse(StreamsBuilder builder, UserStatusJoiner userStatusJoiner) {
         JsonSerde<UserWithStatus> userSerde = new JsonSerde<>(UserWithStatus.class);
-        KStream<String, UserWithStatus> stream = builder.stream("signup", Consumed.with(Serdes.String(), userSerde))
-                .selectKey((key, value) -> value.getUsername())
+        KStream<UUID, UserWithStatus> stream = builder.stream("signup", Consumed.with(Serdes.UUID(), userSerde))
+                .selectKey((key, value) -> value.getId())
                 .filter((k, v) -> (v.getStatus() == NEW));
         stream.leftJoin(
-                        builder.stream("accountCreation", Consumed.with(Serdes.String(), userSerde))
-                                .selectKey((key, value) -> value.getUsername()),
+                        builder.stream("accountCreation", Consumed.with(Serdes.UUID(), userSerde))
+                                .selectKey((key, value) -> value.getId()),
                         userStatusJoiner,
                         JoinWindows.ofTimeDifferenceWithNoGrace(Duration.ofSeconds(timeout)),
-                        StreamJoined.with(Serdes.String(), userSerde, userSerde))
-                .to("signup", Produced.with(Serdes.String(), userSerde));
+                        StreamJoined.with(Serdes.UUID(), userSerde, userSerde))
+                .to("signup", Produced.with(Serdes.UUID(), userSerde));
         return stream;
     }
 
@@ -91,7 +92,7 @@ public class SignupSagaOrchestrator {
                     try {
                         userService.createUser(u);
                     } catch (DuplicateKeyException e) {
-                        CompletableFuture<ResponseEntity<String>> future = transactionMap.get(u.getUsername());
+                        CompletableFuture<ResponseEntity<String>> future = transactionMap.get(u.getId());
                         if (future != null)
                             future.complete(ResponseEntity.status(HttpStatus.CONFLICT).body(
                                     "Signup error: " + "User with name " + u.getUsername() + " already exists"));
@@ -99,11 +100,11 @@ public class SignupSagaOrchestrator {
                     }
                 }
                 case CONFIRMED -> {
-                    CompletableFuture<ResponseEntity<String>> future = transactionMap.get(u.getUsername());
+                    CompletableFuture<ResponseEntity<String>> future = transactionMap.get(u.getId());
                     if (future != null)
                         future.complete(ResponseEntity.status(HttpStatus.CREATED).body("User signed up successfully."));
                 }
-                case CANCELLED -> userService.deleteUser(u.getUsername());
+                case CANCELLED -> userService.deleteUserById(u.getId());
 
             }
         };
