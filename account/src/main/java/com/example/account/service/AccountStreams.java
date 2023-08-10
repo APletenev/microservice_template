@@ -28,7 +28,7 @@ public class AccountStreams {
                     try {
                         accountService.save(new Account(u.getId(), u.getUsername(), u.getEmail(), 0));
                         u.setStatus(CONFIRMED);
-                        streamBridge.send("accountCreation-out-0", u);
+                        streamBridge.send("signup-out-0", u);
                     } catch (Exception e) {
                         log.info("Attempt to signup with existing username");
                     }

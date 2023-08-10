@@ -27,8 +27,8 @@ spring:
         signup-in-0:
           destination: signup
           group: account
-        accountCreation-out-0:
-          destination: accountCreation
+        signup-out-0:
+          destination: signup
       source: signup
 
   kafka:

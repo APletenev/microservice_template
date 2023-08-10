@@ -32,21 +32,17 @@ spring:
         signup-in-0:
           destination: signup
           group: user1
-      source: signup;accountCreation
-      function:
-        definition: accountCreation;signup
-      kafka:
-        streams:
-          binder:
-            functions:
-              accountCreation:
-                applicationId: account-creation-consumer
-              signup:
-                applicationId: signup-consumer
+      source: signup
 
   kafka:
     bootstrap-servers:
       ${BROKER_HOST}: ${BROKER_PORT}
+
+org:
+  jobrunr:
+    background-job-server:
+      enabled: true
+      poll-interval: 1
 
 ---
 spring:
