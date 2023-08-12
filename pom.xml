@@ -23,5 +23,6 @@
     <module>account</module>
     <module>common</module>
     <module>e2e-tests</module>
+    <module>config-server</module>
   </modules>
 </project>

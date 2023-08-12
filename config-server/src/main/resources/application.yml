@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: configuration-server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/APletenev/config-server-repo
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
+          clone-on-start: true
+
+server:
+  port: 8888
