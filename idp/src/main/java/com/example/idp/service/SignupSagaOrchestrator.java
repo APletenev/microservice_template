@@ -66,12 +66,18 @@ public class SignupSagaOrchestrator {
     }
 
     public void cancelTransactionByTimeout(UserWithStatus userWithStatus) {
-        CompletableFuture<ResponseEntity<String>> future = transactionMap.get(userWithStatus.getId()).getResponse();
-        if (future != null) {
-            future.complete(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Signup error: Timeout"));
+        UUID id = userWithStatus.getId();
+        if (id != null) {
+            SignupResponseDTO dto = transactionMap.get(id);
+            if (dto != null) {
+                CompletableFuture<ResponseEntity<String>> future = dto.getResponse();
+                if (future != null) {
+                    future.complete(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Signup error: Timeout"));
+                }
+                userWithStatus.setStatus(CANCELLED);
+                streamBridge.send("signup-out-0", userWithStatus);
+            }
         }
-        userWithStatus.setStatus(CANCELLED);
-        streamBridge.send("signup-out-0", userWithStatus);
     }
 
     @Bean
