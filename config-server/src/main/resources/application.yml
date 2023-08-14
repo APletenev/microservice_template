@@ -10,6 +10,10 @@ spring:
           username: ${GIT_USERNAME}
           password: ${GIT_PASSWORD}
           clone-on-start: true
+    bus:
+      enabled: true
+    kafka:
+      bootstrap-servers: ${BROKER_HOST}:${BROKER_PORT}
 
 server:
   port: ${CONFIG_PORT}
