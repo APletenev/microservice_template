@@ -5,44 +5,12 @@ spring:
   application:
     name: account
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://${IDP_HOST}:${IDP_PORT}
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${ACCOUNT_DATASOURCE_HOST}:${ACCOUNT_DB_PORT}/${ACCOUNT_DB}?characterEncoding=utf8
     username: postgres
     password: ${ACCOUNT_DB_PASSWORD}
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate.ddl-auto: update
 
-  cloud:
-    stream:
-      bindings:
-        signup-in-0:
-          destination: signup
-          group: account
-        signup-out-0:
-          destination: signup
-      source: signup
-
-  kafka:
-    bootstrap-servers:
-      ${BROKER_HOST}: ${BROKER_PORT}
-
----
-spring:
   config:
-    activate:
-      on-profile: dev
+    import: configserver:http://${CONFIG_HOST}:${CONFIG_PORT}
 
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
