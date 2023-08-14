@@ -12,46 +12,5 @@ spring:
     username: postgres
     password: ${IDP_DB_PASSWORD}
 
-  jpa:
-    properties:
-      hibernate:
-        dialect=org.hibernate.dialect.PostgreSQLDialect
-    defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: none
-  sql:
-    init:
-      mode: always
-      platform: postgresql
-
-  cloud:
-    stream:
-      bindings:
-        signup-out-0:
-          destination: signup
-        signup-in-0:
-          destination: signup
-          group: user1
-      source: signup
-
-  kafka:
-    bootstrap-servers:
-      ${BROKER_HOST}: ${BROKER_PORT}
-
-org:
-  jobrunr:
-    background-job-server:
-      enabled: true
-      poll-interval: 1
-
----
-spring:
   config:
-    activate:
-      on-profile: dev
-
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
+    import: configserver:http://${CONFIG_HOST}:${CONFIG_PORT}
