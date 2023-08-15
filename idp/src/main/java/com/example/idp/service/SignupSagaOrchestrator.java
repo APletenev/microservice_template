@@ -66,18 +66,16 @@ public class SignupSagaOrchestrator {
     }
 
     public void cancelTransactionByTimeout(UserWithStatus userWithStatus) {
-        UUID id = userWithStatus.getId();
-        if (id != null) {
-            SignupResponseDTO dto = transactionMap.get(id);
-            if (dto != null) {
-                CompletableFuture<ResponseEntity<String>> future = dto.getResponse();
-                if (future != null) {
-                    future.complete(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Signup error: Timeout"));
-                }
-                userWithStatus.setStatus(CANCELLED);
-                streamBridge.send("signup-out-0", userWithStatus);
+
+        SignupResponseDTO signupResponseDTO = transactionMap.get(userWithStatus.getId());
+        if (signupResponseDTO != null) {
+            CompletableFuture<ResponseEntity<String>> future = signupResponseDTO.getResponse();
+            if (future != null) {
+                future.complete(ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body("Signup error: Timeout"));
             }
         }
+        userWithStatus.setStatus(CANCELLED);
+        streamBridge.send("signup-out-0", userWithStatus);
     }
 
     @Bean
@@ -88,7 +86,8 @@ public class SignupSagaOrchestrator {
                     try {
                         userService.createUser(u);
                     } catch (DuplicateKeyException e) {
-                        CompletableFuture<ResponseEntity<String>> future = transactionMap.get(u.getId()).getResponse();
+                        CompletableFuture<ResponseEntity<String>> future = transactionMap.get(
+                                u.getId()).getResponse();
                         if (future != null)
                             future.complete(ResponseEntity.status(HttpStatus.CONFLICT).body(
                                     "Signup error: " + "User with name " + u.getUsername() + " already exists"));
